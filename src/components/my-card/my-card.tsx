@@ -8,10 +8,9 @@ import { Component, h, Prop, State } from '@stencil/core';
 export class MyCard {
   @Prop({mutable: true}) name: string;
   @State() apiData: string;
-  showCard: boolean = true;
+  @State() showCard: boolean = true;
 
   changeStates() {
-    console.log("!");
     this.name = 'John Doe';
     this.apiData = "we have data from the api";
     this.showCard = false;
@@ -44,7 +43,10 @@ export class MyCard {
       </div>
     );
 
-    
+    let contentToDisplay = '';
+    if (this.showCard) {
+      contentToDisplay = reactContent;
+    }
 
     let mainContent = (
       <div class="my-card-wrapper">
@@ -53,7 +55,7 @@ export class MyCard {
         <h5>{this.apiData}</h5>
         <button class="btn-stencil">Stencil</button>
         <button class="btn-react">React</button>
-        {reactContent}
+        {contentToDisplay}
         {stencilContent}
       </div>
     );
