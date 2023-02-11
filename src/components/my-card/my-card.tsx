@@ -12,6 +12,11 @@ export class MyCard {
   @State() showStencilTab = false;
   @State() showCard: boolean = true;
 
+  @State() myStencilUsers: string;
+  @State() myReactUsers: string;
+
+  apiKey = 'M4A8WOBKS73YRBKR';
+
   // @Watch('name')
   // watchHandler(newValue: boolean, oldValue: boolean) {
   //   console.log(`The new value of name is: ${newValue}... old value: ${oldValue}`);
@@ -23,47 +28,91 @@ export class MyCard {
   //   this.showCard = false;
   // }
 
-  connectedCallback() {
-    console.log('connectedCallback');
-  }
+  // connectedCallback() {
+  //   console.log('connectedCallback');
+  // }
 
-  disconnectedCallback() {
-    console.log('disconnectedCallback');
-  }
+  // disconnectedCallback() {
+  //   console.log('disconnectedCallback');
+  // }
+
+  // componentWillRender() {
+  //   // Always recommended to make rendered state updates here
+
+  //   // this.apiData = "updated"
+  //   console.log('componentWillRender');
+  // }
+
+  // componentDidLoad() {
+  //   // Called once just after component is fully loaded
+  //   // and the first render() occurs
+  //   console.log('componentDidLoad');
+  //   this.apiData = 'API has been updated';
+  // }
+
+  // componentShouldUpdate() {
+  //   // This hook is called when a component's Prop or State
+  //   // property changes and a rerender is about to be requested
+  //   console.log('componentShouldUpdate');
+  //   return true;
+  // }
+
+  // componentDidUpdate() {
+  //   console.log('componentDidUpdate - called because we updated this.apiData in componentDidLoad');
+  // }
+
+  // componentWillUpdate() {
+  //   console.log('componentDidUpdate - called because we will update this.apiData in componentDidLoad');
+  // }
 
   componentWillLoad() {
-    // only called once
-    // good place to load data asynchronously
-    console.log('componentWillLoad');
+    this.apiData = 'loading...';
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.apiKey}`)
+      .then(res => {
+        return res.json();
+      })
+      .then(parsedRes => {
+        var metaData = parsedRes['Meta Data'];
+        var timeDateStencil = metaData['1. Information'];
+        this.apiData = timeDateStencil;
+      });
   }
 
-  componentWillRender() {
-    // Always recommended to make rendered state updates here
-
-    // this.apiData = "updated"
-    console.log('componentWillRender');
+  getStencilUserFromAPI() {
+    this.myReactUsers = 'Loading stencil users...';
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.apiKey}`)
+      .then(res => {
+        return res.json();
+      })
+      .then(parsedRes => {
+        var timeSeries = parsedRes['Time Series (5min)'];
+        var timeDateReact = timeSeries['2023-02-10 19:45:00'];
+        this.myStencilUsers = timeDateReact['5. volume'];
+      })
+      .catch(err => console.log('error: ', err));
   }
 
-  componentDidLoad() {
-    // Called once just after component is fully loaded
-    // and the first render() occurs
-    console.log('componentDidLoad');
-    this.apiData = 'API has been updated';
+  fetchMyDataFromApi(contentType: string) {
+    if (contentType === 'stencil') {
+      this.getStencilUserFromAPI();
+    } else {
+      this.getReactUserFromAPI();
+    }
   }
 
-  componentShouldUpdate() {
-    // This hook is called when a component's Prop or State
-    // property changes and a rerender is about to be requested
-    console.log('componentShouldUpdate');
-    return true;
-  }
-
-  componentDidUpdate() {
-    console.log('componentDidUpdate - called because we updated this.apiData in componentDidLoad');
-  }
-
-  componentWillUpdate() {
-    console.log('componentDidUpdate - called because we will update this.apiData in componentDidLoad');
+  getReactUserFromAPI() {
+    this.myReactUsers = 'Loading react users...';
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.apiKey}`)
+      .then(res => {
+        return res.json();
+      })
+      .then(parsedRes => {
+        var timeSeries = parsedRes['Time Series (5min)'];
+        var timeDateReact = timeSeries['2023-02-10 19:45:00'];
+        console.log(timeSeries);
+        this.myReactUsers = timeDateReact['5. volume'];
+      })
+      .catch(err => console.log('error: ', err));
   }
 
   onContentChange(content: string) {
@@ -88,8 +137,12 @@ export class MyCard {
       <div>
         <div class="card-custom card-pink" id="react-div">
           <div>Hello from React</div>
-          <div>Live Users</div>
-          <button class="btn-react small-btn">Get React Users</button>
+          <div>
+            Live Users: <span>{this.myReactUsers}</span>
+          </div>
+          <button class="btn-react small-btn" onClick={this.fetchMyDataFromApi.bind(this, 'react')}>
+            Get React Users
+          </button>
         </div>
       </div>
     );
@@ -98,8 +151,12 @@ export class MyCard {
       <div>
         <div class="card-custom card-blue" id="stencil-div">
           <div>Hello from stencil</div>
-          <div>Live Users</div>
-          <button class="btn-stencil small-btn">Get stencil Users</button>
+          <div>
+            Live Users: <span>{this.myStencilUsers}</span>
+          </div>
+          <button class="btn-stencil small-btn" onClick={this.fetchMyDataFromApi.bind(this, 'stencil')}>
+            Get stencil Users
+          </button>
         </div>
       </div>
     );
