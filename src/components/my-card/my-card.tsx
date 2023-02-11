@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'my-card',
@@ -6,18 +6,38 @@ import { Component, h, Prop, State } from '@stencil/core';
   shadow: true,
 })
 export class MyCard {
-  @Prop({mutable: true}) name: string;
+  @Prop({ mutable: true }) name: string;
   @State() apiData: string;
+  @State() showReactTab = false;
+  @State() showStencilTab = false;
   @State() showCard: boolean = true;
 
-  changeStates() {
-    this.name = 'John Doe';
-    this.apiData = "we have data from the api";
-    this.showCard = false;
-  }
+  // @Watch('name')
+  // watchHandler(newValue: boolean, oldValue: boolean) {
+  //   console.log(`The new value of name is: ${newValue}... old value: ${oldValue}`);
+  // }
 
-  componentWillUpdate() {
-    console.log("componentWillUpdate");
+  // changeStates() {
+  //   this.name = 'John Doe';
+  //   this.apiData = 'we have data from the api';
+  //   this.showCard = false;
+  // }
+
+  // componentWillUpdate() {
+  //   console.log('componentWillUpdate');
+  // }
+
+  onContentChange(content: string) {
+    if (content === 'reacttab') {
+      this.showReactTab = true;
+      this.showStencilTab = false;
+    } else if (content === 'stenciltab') {
+      this.showReactTab = false;
+      this.showStencilTab = true;
+    } else {
+      this.showReactTab = false;
+      this.showStencilTab = false;
+    }
   }
 
   render() {
@@ -26,9 +46,7 @@ export class MyCard {
         <div class="card-custom card-pink" id="react-div">
           <div>Hello from React</div>
           <div>Live Users</div>
-          <button class="btn-react small-btn" onClick={this.changeStates.bind(this)}>
-            Get React Users
-          </button>
+          <button class="btn-react small-btn">Get React Users</button>
         </div>
       </div>
     );
@@ -44,8 +62,10 @@ export class MyCard {
     );
 
     let contentToDisplay = '';
-    if (this.showCard) {
+    if (this.showReactTab) {
       contentToDisplay = reactContent;
+    } else if (this.showStencilTab) {
+      contentToDisplay = stencilContent;
     }
 
     let mainContent = (
@@ -53,10 +73,13 @@ export class MyCard {
         <h1>Hi, I am {this.name}</h1>
 
         <h5>{this.apiData}</h5>
-        <button class="btn-stencil">Stencil</button>
-        <button class="btn-react">React</button>
+        <button class="btn-stencil" onClick={this.onContentChange.bind(this, 'stenciltab')}>
+          Stencil
+        </button>
+        <button class="btn-react" onClick={this.onContentChange.bind(this, 'reacttab')}>
+          React
+        </button>
         {contentToDisplay}
-        {stencilContent}
       </div>
     );
     return mainContent;
