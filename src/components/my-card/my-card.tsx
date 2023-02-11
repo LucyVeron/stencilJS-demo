@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'my-card',
@@ -7,7 +7,7 @@ import { Component, h, Prop, State, Watch } from '@stencil/core';
 })
 export class MyCard {
   @Prop({ mutable: true }) name: string;
-  @State() apiData: string;
+  @State() apiData: string = 'starting value';
   @State() showReactTab = false;
   @State() showStencilTab = false;
   @State() showCard: boolean = true;
@@ -23,9 +23,48 @@ export class MyCard {
   //   this.showCard = false;
   // }
 
-  // componentWillUpdate() {
-  //   console.log('componentWillUpdate');
-  // }
+  connectedCallback() {
+    console.log('connectedCallback');
+  }
+
+  disconnectedCallback() {
+    console.log('disconnectedCallback');
+  }
+
+  componentWillLoad() {
+    // only called once
+    // good place to load data asynchronously
+    console.log('componentWillLoad');
+  }
+
+  componentWillRender() {
+    // Always recommended to make rendered state updates here
+
+    // this.apiData = "updated"
+    console.log('componentWillRender');
+  }
+
+  componentDidLoad() {
+    // Called once just after component is fully loaded
+    // and the first render() occurs
+    console.log('componentDidLoad');
+    this.apiData = 'API has been updated';
+  }
+
+  componentShouldUpdate() {
+    // This hook is called when a component's Prop or State
+    // property changes and a rerender is about to be requested
+    console.log('componentShouldUpdate');
+    return false;
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate - called because we updated this.apiData in componentDidLoad');
+  }
+
+  componentWillUpdate() {
+    console.log('componentDidUpdate - called because we will update this.apiData in componentDidLoad');
+  }
 
   onContentChange(content: string) {
     if (content === 'reacttab') {
@@ -80,6 +119,10 @@ export class MyCard {
           React
         </button>
         {contentToDisplay}
+        <h></h>
+        <h3>Two-way data binding in stencil</h3>
+
+        <input type="text" class="my-input-textbox" value={this.name} />
       </div>
     );
     return mainContent;
