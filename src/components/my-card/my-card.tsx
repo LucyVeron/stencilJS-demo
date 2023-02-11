@@ -15,7 +15,7 @@ export class MyCard {
   @State() myStencilUsers: string;
   @State() myReactUsers: string;
 
-  apiKey = 'M4A8WOBKS73YRBKR';
+  API_KEY = 'M4A8WOBKS73YRBKR';
 
   // @Watch('name')
   // watchHandler(newValue: boolean, oldValue: boolean) {
@@ -67,7 +67,7 @@ export class MyCard {
 
   componentWillLoad() {
     this.apiData = 'loading...';
-    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.apiKey}`)
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.API_KEY}`)
       .then(res => {
         return res.json();
       })
@@ -80,7 +80,7 @@ export class MyCard {
 
   getStencilUserFromAPI() {
     this.myReactUsers = 'Loading stencil users...';
-    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.apiKey}`)
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.API_KEY}`)
       .then(res => {
         return res.json();
       })
@@ -102,7 +102,7 @@ export class MyCard {
 
   getReactUserFromAPI() {
     this.myReactUsers = 'Loading react users...';
-    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.apiKey}`)
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${this.API_KEY}`)
       .then(res => {
         return res.json();
       })

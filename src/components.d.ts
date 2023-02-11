@@ -23,6 +23,9 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface SearchWord {
+        "searchText": string;
+    }
 }
 declare global {
     interface HTMLMyCardElement extends Components.MyCard, HTMLStencilElement {
@@ -37,9 +40,16 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLSearchWordElement extends Components.SearchWord, HTMLStencilElement {
+    }
+    var HTMLSearchWordElement: {
+        prototype: HTMLSearchWordElement;
+        new (): HTMLSearchWordElement;
+    };
     interface HTMLElementTagNameMap {
         "my-card": HTMLMyCardElement;
         "my-component": HTMLMyComponentElement;
+        "search-word": HTMLSearchWordElement;
     }
 }
 declare namespace LocalJSX {
@@ -60,9 +70,13 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface SearchWord {
+        "searchText"?: string;
+    }
     interface IntrinsicElements {
         "my-card": MyCard;
         "my-component": MyComponent;
+        "search-word": SearchWord;
     }
 }
 export { LocalJSX as JSX };
@@ -71,6 +85,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "my-card": LocalJSX.MyCard & JSXBase.HTMLAttributes<HTMLMyCardElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "search-word": LocalJSX.SearchWord & JSXBase.HTMLAttributes<HTMLSearchWordElement>;
         }
     }
 }
