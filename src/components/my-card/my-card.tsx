@@ -55,7 +55,7 @@ export class MyCard {
     // This hook is called when a component's Prop or State
     // property changes and a rerender is about to be requested
     console.log('componentShouldUpdate');
-    return false;
+    return true;
   }
 
   componentDidUpdate() {
@@ -77,6 +77,10 @@ export class MyCard {
       this.showReactTab = false;
       this.showStencilTab = false;
     }
+  }
+
+  onUserInput(event: Event) {
+    this.name = (event.target as HTMLInputElement).value;
   }
 
   render() {
@@ -122,7 +126,7 @@ export class MyCard {
         <h></h>
         <h3>Two-way data binding in stencil</h3>
 
-        <input type="text" class="my-input-textbox" value={this.name} />
+        <input type="text" class="my-input-textbox" onInput={this.onUserInput.bind(this)} value={this.name}></input>
       </div>
     );
     return mainContent;

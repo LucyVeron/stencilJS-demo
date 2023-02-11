@@ -1,6 +1,13 @@
 * {
-  color: white;
   font-family: sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: white;
 }
 
 .my-card-wrapper {
@@ -40,16 +47,28 @@ button {
   border: 1px solid white;
   text-decoration: none;
   border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(30px);
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   letter-spacing: 2px;
   cursor: pointer;
   text-transform: uppercase;
-  opacity: 0.95;
 }
 
 button:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.my-input-textbox {
+  display: block;
+  height: 50px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
 }
