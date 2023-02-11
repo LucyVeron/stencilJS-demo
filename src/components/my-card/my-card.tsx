@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, Listen } from '@stencil/core';
 
 @Component({
   tag: 'my-card',
@@ -132,6 +132,11 @@ export class MyCard {
     this.name = (event.target as HTMLInputElement).value;
   }
 
+  @Listen('searchWordNameSelected', {target: 'body'})
+  searchWordNameSelectedHandler(event: CustomEvent<string>){
+    this.name = event.detail;
+  }
+
   render() {
     let reactContent = (
       <div>
@@ -170,7 +175,7 @@ export class MyCard {
 
     let mainContent = (
       <div class="my-card-wrapper">
-        <h1>Hi, I am {this.name}</h1>
+        <h1>{this.name}</h1>
 
         <h5>{this.apiData}</h5>
         <button class="btn-stencil" onClick={this.onContentChange.bind(this, 'stenciltab')}>

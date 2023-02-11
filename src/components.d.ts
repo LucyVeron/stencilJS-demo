@@ -27,6 +27,10 @@ export namespace Components {
         "searchText": string;
     }
 }
+export interface SearchWordCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSearchWordElement;
+}
 declare global {
     interface HTMLMyCardElement extends Components.MyCard, HTMLStencilElement {
     }
@@ -71,6 +75,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface SearchWord {
+        "onSearchWordNameSelected"?: (event: SearchWordCustomEvent<string>) => void;
         "searchText"?: string;
     }
     interface IntrinsicElements {

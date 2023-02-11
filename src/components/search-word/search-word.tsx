@@ -1,4 +1,4 @@
-import { Component, Prop, h, State } from '@stencil/core';
+import { Component, Prop, h, State, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'search-word',
@@ -10,6 +10,7 @@ export class SearchWord {
   @Prop({ mutable: true }) searchText: string;
   @State() searchResult: { name: string; marketOpen: string }[] = [];
   @State() userInput: string;
+  @Event({ bubbles: true, composed: true }) searchWordNameSelected: EventEmitter<string>;
 
   searchFromApi() {
     fetch('https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=' + this.searchText + '&apikey=' + this.API_KEY)
@@ -33,8 +34,8 @@ export class SearchWord {
     this.searchText = this.userInput;
   }
 
-  componentDidUpdate() {
-    console.log('!', this.searchResult);
+  onRowClick(name: string) {
+    this.searchWordNameSelected.emit(name);
   }
 
   render() {
@@ -51,7 +52,7 @@ export class SearchWord {
         <div>
           <table id="api-table">
             {this.searchResult.map(r => (
-              <tr>
+              <tr onClick={this.onRowClick.bind(this, r.name)}>
                 <td>{r.name}</td>
                 <td>{r.marketOpen}</td>
               </tr>
