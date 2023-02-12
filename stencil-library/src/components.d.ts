@@ -10,21 +10,11 @@ export namespace Components {
         "name": string;
     }
     interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
     }
     interface SearchWord {
         "searchText": string;
+    }
+    interface SideMenu {
     }
 }
 export interface SearchWordCustomEvent<T> extends CustomEvent<T> {
@@ -50,10 +40,17 @@ declare global {
         prototype: HTMLSearchWordElement;
         new (): HTMLSearchWordElement;
     };
+    interface HTMLSideMenuElement extends Components.SideMenu, HTMLStencilElement {
+    }
+    var HTMLSideMenuElement: {
+        prototype: HTMLSideMenuElement;
+        new (): HTMLSideMenuElement;
+    };
     interface HTMLElementTagNameMap {
         "my-card": HTMLMyCardElement;
         "my-component": HTMLMyComponentElement;
         "search-word": HTMLSearchWordElement;
+        "side-menu": HTMLSideMenuElement;
     }
 }
 declare namespace LocalJSX {
@@ -61,27 +58,18 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
     }
     interface SearchWord {
         "onSearchWordNameSelected"?: (event: SearchWordCustomEvent<string>) => void;
         "searchText"?: string;
     }
+    interface SideMenu {
+    }
     interface IntrinsicElements {
         "my-card": MyCard;
         "my-component": MyComponent;
         "search-word": SearchWord;
+        "side-menu": SideMenu;
     }
 }
 export { LocalJSX as JSX };
@@ -91,6 +79,7 @@ declare module "@stencil/core" {
             "my-card": LocalJSX.MyCard & JSXBase.HTMLAttributes<HTMLMyCardElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "search-word": LocalJSX.SearchWord & JSXBase.HTMLAttributes<HTMLSearchWordElement>;
+            "side-menu": LocalJSX.SideMenu & JSXBase.HTMLAttributes<HTMLSideMenuElement>;
         }
     }
 }
