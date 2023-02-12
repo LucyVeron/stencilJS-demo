@@ -14,6 +14,13 @@ export namespace Components {
     }
     interface MyComponent {
     }
+    interface MyModal {
+        "appearance": string;
+        "buttons": string;
+        "closeIcon": string;
+        "header": string;
+        "isOpen": boolean;
+    }
     interface NewButton {
         "appearance": string;
         "text": string;
@@ -23,6 +30,10 @@ export namespace Components {
     }
     interface SideMenu {
     }
+}
+export interface MyModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMyModalElement;
 }
 export interface SearchWordCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -47,6 +58,12 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLMyModalElement extends Components.MyModal, HTMLStencilElement {
+    }
+    var HTMLMyModalElement: {
+        prototype: HTMLMyModalElement;
+        new (): HTMLMyModalElement;
+    };
     interface HTMLNewButtonElement extends Components.NewButton, HTMLStencilElement {
     }
     var HTMLNewButtonElement: {
@@ -69,6 +86,7 @@ declare global {
         "my-button": HTMLMyButtonElement;
         "my-card": HTMLMyCardElement;
         "my-component": HTMLMyComponentElement;
+        "my-modal": HTMLMyModalElement;
         "new-button": HTMLNewButtonElement;
         "search-word": HTMLSearchWordElement;
         "side-menu": HTMLSideMenuElement;
@@ -82,6 +100,14 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface MyComponent {
+    }
+    interface MyModal {
+        "appearance"?: string;
+        "buttons"?: string;
+        "closeIcon"?: string;
+        "header"?: string;
+        "isOpen"?: boolean;
+        "onAction"?: (event: MyModalCustomEvent<any>) => void;
     }
     interface NewButton {
         "appearance"?: string;
@@ -97,6 +123,7 @@ declare namespace LocalJSX {
         "my-button": MyButton;
         "my-card": MyCard;
         "my-component": MyComponent;
+        "my-modal": MyModal;
         "new-button": NewButton;
         "search-word": SearchWord;
         "side-menu": SideMenu;
@@ -109,6 +136,7 @@ declare module "@stencil/core" {
             "my-button": LocalJSX.MyButton & JSXBase.HTMLAttributes<HTMLMyButtonElement>;
             "my-card": LocalJSX.MyCard & JSXBase.HTMLAttributes<HTMLMyCardElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "my-modal": LocalJSX.MyModal & JSXBase.HTMLAttributes<HTMLMyModalElement>;
             "new-button": LocalJSX.NewButton & JSXBase.HTMLAttributes<HTMLNewButtonElement>;
             "search-word": LocalJSX.SearchWord & JSXBase.HTMLAttributes<HTMLSearchWordElement>;
             "side-menu": LocalJSX.SideMenu & JSXBase.HTMLAttributes<HTMLSideMenuElement>;
