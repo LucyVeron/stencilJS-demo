@@ -1,8 +1,14 @@
 import { Config } from '@stencil/core';
+import { reactOutputTarget as react } from '@stencil/react-output-target';
 
 export const config: Config = {
   namespace: 'stencil-demo',
   outputTargets: [
+    react({
+      componentCorePackage: 'stencil-library',
+      proxiesFile: '../component-library-react/src/components/stencil-generated/index.ts',
+      includeDefineCustomElements: true,
+    }),
     {
       type: 'dist',
       esmLoaderPath: '../loader',
