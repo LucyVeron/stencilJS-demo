@@ -1,4 +1,4 @@
-# my-card
+# my-button
 
 
 
@@ -9,20 +9,20 @@
 
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
-| `name`   | `name`    |             | `string` | `undefined` |
+| `text`   | `text`    |             | `string` | `undefined` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [my-component](../my-component)
+ - [side-menu](../side-menu)
 
 ### Graph
 ```mermaid
 graph TD;
-  my-component --> my-card
-  style my-card fill:#f9f,stroke:#333,stroke-width:4px
+  side-menu --> my-button
+  style my-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

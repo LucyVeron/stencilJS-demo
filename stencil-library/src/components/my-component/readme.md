@@ -5,14 +5,23 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
+## Dependencies
 
-| Property | Attribute | Description     | Type     | Default     |
-| -------- | --------- | --------------- | -------- | ----------- |
-| `first`  | `first`   | The first name  | `string` | `undefined` |
-| `last`   | `last`    | The last name   | `string` | `undefined` |
-| `middle` | `middle`  | The middle name | `string` | `undefined` |
+### Depends on
 
+- [my-card](../my-card)
+- [search-word](../search-word)
+- [side-menu](../side-menu)
+
+### Graph
+```mermaid
+graph TD;
+  my-component --> my-card
+  my-component --> search-word
+  my-component --> side-menu
+  side-menu --> my-button
+  style my-component fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
