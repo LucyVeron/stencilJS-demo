@@ -6,6 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface MyButton {
+        "text": string;
+    }
     interface MyCard {
         "name": string;
     }
@@ -22,6 +25,12 @@ export interface SearchWordCustomEvent<T> extends CustomEvent<T> {
     target: HTMLSearchWordElement;
 }
 declare global {
+    interface HTMLMyButtonElement extends Components.MyButton, HTMLStencilElement {
+    }
+    var HTMLMyButtonElement: {
+        prototype: HTMLMyButtonElement;
+        new (): HTMLMyButtonElement;
+    };
     interface HTMLMyCardElement extends Components.MyCard, HTMLStencilElement {
     }
     var HTMLMyCardElement: {
@@ -47,6 +56,7 @@ declare global {
         new (): HTMLSideMenuElement;
     };
     interface HTMLElementTagNameMap {
+        "my-button": HTMLMyButtonElement;
         "my-card": HTMLMyCardElement;
         "my-component": HTMLMyComponentElement;
         "search-word": HTMLSearchWordElement;
@@ -54,6 +64,9 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface MyButton {
+        "text"?: string;
+    }
     interface MyCard {
         "name"?: string;
     }
@@ -66,6 +79,7 @@ declare namespace LocalJSX {
     interface SideMenu {
     }
     interface IntrinsicElements {
+        "my-button": MyButton;
         "my-card": MyCard;
         "my-component": MyComponent;
         "search-word": SearchWord;
@@ -76,6 +90,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "my-button": LocalJSX.MyButton & JSXBase.HTMLAttributes<HTMLMyButtonElement>;
             "my-card": LocalJSX.MyCard & JSXBase.HTMLAttributes<HTMLMyCardElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "search-word": LocalJSX.SearchWord & JSXBase.HTMLAttributes<HTMLSearchWordElement>;

@@ -16,7 +16,12 @@ export class SideMenu {
         <div class="menu-background"></div>
         <div class="actual-menu">
           <button onClick={e => this.toggleBackground(e)}>X Close</button>
-          <slot />
+          <my-button slot="title">
+            FOO
+          </my-button>
+          <my-button text="abc">
+            BAZ
+          </my-button>
         </div>
       </div>
     );
